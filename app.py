@@ -33,7 +33,7 @@ async def homepage(request):
                              headers=response_header)
 
     text = gpt2.generate(sess,
-                         length=int(params.get('length', 1023)),
+                         length=int(params.get('length', 25)),
                          temperature=float(params.get('temperature', 0.7)),
                          top_k=int(params.get('top_k', 0)),
                          top_p=float(params.get('top_p', 0)),
