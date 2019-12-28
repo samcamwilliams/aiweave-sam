@@ -55,11 +55,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI-Generated Text with GPT-2 using Google Cloud Run</title>
-  <meta name="title" content="AI-Generated Text with GPT-2 using Google Cloud Run" />
-  <meta name="description" content="Generate text from OpenAI's GPT-2 model!" />
-
-
+  <title>aiweave-sam</title>
+  <meta name="title" content="arweave-sam as a service" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -72,7 +69,7 @@
         <i class="fas fa-robot fa-stack-1x fa-inverse"></i>
       </span>
     </span>
-    <div class="brand-text is-family-code is-uppercase has-text-weight-bold">GPT-2</div>
+    <div class="brand-text is-family-code is-uppercase has-text-weight-bold">aiweave-sam</div>
   </div>
 
   <div id="navbarBasicExample" class="navbar-menu is-active">
@@ -80,7 +77,7 @@
 
 
       <div class="navbar-item">
-        Generate custom text from an AI using GPT-2 (using the 117M default model)
+        Generate text using a variant of GPT-2 trained on arweave-sam's Discord posts
       </div>
 
     </div>
@@ -88,7 +85,7 @@
     <div class="navbar-end">
       <div class="navbar-item is-hidden-touch">
         <div class="buttons">
-          <a class="button is-light" href="https://github.com/minimaxir/gpt-2-cloud-run" target="_blank">
+          <a class="button is-light" href="https://github.com/samcamwilliams/aiweave-sam" target="_blank">
             <span class="icon">
               <i class="fab fa-lg fa-github"></i>
             </span><span>GitHub</span>
@@ -106,26 +103,26 @@
         <div class="column is-narrow" style="width: 250px;">
           <form id="gen-form">
             <div class="field">
-              <label class="label">Text Prompt</label>
+              <label class="label">Your Question or Topic</label>
               <div class="control">
-                <textarea id="prefix" class="textarea" type="text" placeholder="Donald Trump" rows="2"></textarea>
+                <textarea id="prefix" class="textarea" type="text" placeholder="Proof of work" rows="2"></textarea>
               </div>
-              <p class="help">Starts the generated text with the specified text. <em>(Optional: max 500 characters)</em></p>
+              <p class="help">Give a topic to talk about <em>(Optional: max 500 characters)</em></p>
             </div>
             <div class="field">
-              <label class="label">Generated Text Length</label>
+              <label class="label">Reply Length</label>
               <div class="control">
-                <input id="length" class="input" type="text" placeholder="Text input" value="100">
+                <input id="length" class="input" type="text" placeholder="Text input" value="75">
               </div>
-              <p class="help">Length of the text in tokens to generate. <em>(max: 1023)</em></p>
+              <p class="help">How many words you would like aiweave-sam to ramble <em>(max: 1023)</em></p>
             </div>
 
             <div class="field">
-              <label class="label">Temperature</label>
+              <label class="label">Whackiness</label>
               <div class="control">
                 <input id="temperature" class="input" type="text" placeholder="0.7" value="0.7">
               </div>
-              <p class="help">Controls the generated text "creativity." <em>(the higher the temperature, the more
+              <p class="help">(Optional:) Controls the generated text "creativity." <em>(the higher the temperature, the more
                   creative)</em></p>
             </div>
             <div class="field">
@@ -133,7 +130,7 @@
               <div class="control">
                 <input id="top_k" class="input" type="text" placeholder="40" value="40">
               </div>
-              <p class="help">Constrains the generated text tokens to the top <em>k</em> possibilities. <em>(set to 0 to
+              <p class="help">(Optional:) Constrains the generated text tokens to the top <em>k</em> possibilities. <em>(set to 0 to
                   disable)</em></p>
             </div>
             <div class="buttons">
@@ -141,7 +138,7 @@
                 <button type="submit" name="submit" id="generate-text" class="button is-link">
                   <span class="icon">
                     <i class="fas fa-md fa-pen"></i>
-                  </span><span>Generate Text!</span></button>
+                  </span><span>Generate Response!</span></button>
               </span>
 
             </div>
@@ -158,9 +155,9 @@
                 <span class="icon">
                   <i class="fas fa-md fa-trash-alt"></i>
                 </span><span>Clear Texts</span</button> </span> </div> </div> <div id="model-output" class="column">
-                  <p id="tutorial" class="subtitle"><em>Generated text will appear here!
-                      Use the form to configure GPT-2 and press <strong>Generate Text</strong>
-                      to get your own text!
+                  <p id="tutorial" class="subtitle"><em>
+                      Use the form on the <b>left</b> </b>to ask aiweave-sam a question and press <strong>Generate Response</strong>
+                      to get a reply!
                     </em></p>
           </div>
         </div>
@@ -173,8 +170,7 @@
     <div class="content has-text-centered">
       <p>
         Made using <a href="https://github.com/minimaxir/gpt-2-simple" target="_blank"><strong>gpt-2-simple</strong></a>
-        and <a href="https://github.com/minimaxir/gpt-2-cloud-run" target="_blank"><strong>gpt-2-cloud-run</strong></a>
-        by <a href="https://minimaxir.com" target="_blank">Max Woolf</a>. Original GPT-2 model provided by <a
+        and <a href="https://github.com/minimaxir/gpt-2-cloud-run" target="_blank"><strong>gpt-2-cloud-run</strong></a>. Original GPT-2 model provided by <a
           href="https://openai.com" target="_blank">OpenAI</a>. This website content
         is licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
       </p>
@@ -197,7 +193,7 @@
       e.preventDefault();
       $.ajax({
         type: "POST",
-        url: "https://gpt2-default-dstdu4u23a-uc.a.run.app",
+        url: "https://aiweave-sam-xjjxnq6t5a-uc.a.run.app/?truncate=\%3C\|endoftext\|\%3E",
         dataType: "json",
         data: JSON.stringify(getInputValues()),
         beforeSend: function (data) {
